@@ -19,7 +19,7 @@ jobs:
       with:
         node-version: 14.x
     - name: Get testing lib
-      run: set -eu && git clone --depth 1 https://github.com/zlocate/web-autotest-public.git
+      run: set -eu && git clone --depth 1 https://github.com/rpill/web-autotest-public.git
     - name: Copy Makefile
       run: cp ./web-autotest-public/Makefile ./Makefile
     - name: Installing Dependencies
@@ -36,7 +36,7 @@ jobs:
       with:
         node-version: 14.x
     - name: Get testing lib
-      run: set -eu && git clone --depth 1 https://github.com/zlocate/web-autotest-public.git
+      run: set -eu && git clone --depth 1 https://github.com/rpill/web-autotest-public.git
     - name: Copy Makefile
       run: cp ./web-autotest-public/Makefile ./Makefile
     - name: Start MongoDB
@@ -63,7 +63,7 @@ jobs:
       with:
         node-version: 14.x
     - name: Get testing lib
-      run: set -eu && git clone https://github.com/zlocate/web-autotest-public.git
+      run: set -eu && git clone https://github.com/rpill/web-autotest-public.git
     - name: Copy Makefile
       run: cp ./web-autotest-public/Makefile ./Makefile
     - name: Start MongoDB
