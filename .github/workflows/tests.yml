@@ -1,0 +1,82 @@
+name: Tests 15 sprint
+
+on:
+  push:
+    branches:
+      - '**'
+    tags:
+      - '**'
+
+
+jobs:
+  test_config:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up GitHub Actions
+      uses: actions/checkout@v2
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - name: Get testing lib
+      run: set -eu && git clone --depth 1 https://github.com/zlocate/web-autotest-public.git
+    - name: Copy Makefile
+      run: cp ./web-autotest-public/Makefile ./Makefile
+    - name: Installing Dependencies
+      run: cd backend&&npm i
+    - name: Run test config
+      run: make proj15-test-config
+  test_endpoints:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up GitHub Actions
+      uses: actions/checkout@v2
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - name: Get testing lib
+      run: set -eu && git clone --depth 1 https://github.com/zlocate/web-autotest-public.git
+    - name: Copy Makefile
+      run: cp ./web-autotest-public/Makefile ./Makefile
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.6.0
+      with:
+        mongodb-version: '4.4'
+    - name: Installing Dependencies
+      run: cd backend&&npm i
+    - name: Run server
+      run: cd backend&&npm run start &
+    - name: Installing wait-port
+      run: npm install -g wait-port
+    - name: Wait for server to start
+      run: wait-port -t 30000 localhost:3000
+    - name: Run test endpoints
+      run: make proj15-test-endpoints
+  test_server:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Set up GitHub Actions
+      uses: actions/checkout@v2
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - name: Get testing lib
+      run: set -eu && git clone https://github.com/zlocate/web-autotest-public.git
+    - name: Copy Makefile
+      run: cp ./web-autotest-public/Makefile ./Makefile
+    - name: Start MongoDB
+      uses: supercharge/mongodb-github-action@1.6.0
+      with:
+        mongodb-version: '4.4'
+    - name: Installing Dependencies
+      run: cd backend&&npm i
+    - name: Run server
+      run: cd backend&&npm run start &
+    - name: Installing wait-port
+      run: npm install -g wait-port
+    - name: Wait for server to start
+      run: wait-port -t 30000 localhost:3000
+    - name: Run test server
+      run: make proj15-test-server
